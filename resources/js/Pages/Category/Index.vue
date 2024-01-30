@@ -112,7 +112,7 @@ const confirmDelete = () => {
 
                 <h1 class="text-xl font-semibold text-gray-700 mb-2">List of Categories</h1>
                 
-                <div class="p-4 bg-white shadow-sm rounded-md w-[600px]">
+                <div class="p-4 bg-white shadow-sm border rounded-md w-[600px]">
                     <CategoryList>
                         <CategoryItem v-for="cat in categories" :key="cat.id" :category="cat" @delete="deleteCategory" />
                     </CategoryList>

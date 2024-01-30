@@ -31,7 +31,7 @@ const clearLocalStorage = () => {
 <template>
     <div>
         <!-- <div class="sticky top-0 h-22 w-full bg-green-300"> blah blah</div> -->
-        <div class="flex items-start min-h-screen">
+        <div class="flex items-start min-h-screen bg-gray-50">
             <nav class="sticky top-0 z-10 bg-blue-700 min-h-screen duration-300" :class="[ !isCollapsed ? 'w-64' : 'w-16' ]">
                 <div class="relative p-4">
                     <div class="flex" :class="[ !isCollapsed ? 'justify-between items-center' : 'justify-center']">
@@ -73,7 +73,7 @@ const clearLocalStorage = () => {
                 </div>
             </nav>
             <div class="flex-1 min-h-screen overflow-hidden">
-                <div class="w-full p-4 bg-white border-b border-gray-50">
+                <div class="w-full p-4">
                     <div class="flex justify-end">
                         <div class="ml-3 relative">
                             <Dropdown align="right" width="48">
@@ -83,7 +83,7 @@ const clearLocalStorage = () => {
                                             type="button"
                                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                         >
-                                            {{ $page.props.auth.user.name }}
+                                            {{ $page.props.auth.user.username }}
 
                                             <svg
                                                 class="ml-2 -mr-0.5 h-4 w-4"
