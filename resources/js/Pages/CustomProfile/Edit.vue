@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -12,7 +12,7 @@ const props = defineProps({
 });
 
 const form = useForm({
-    _method: 'PUT',
+    _method: 'PATCH',
     fname: props.userInfo.fname,
     mname: props.userInfo.mname,
     lname: props.userInfo.lname,
@@ -81,8 +81,7 @@ const updateProfileInformation = () => {
         form.photo = photoInput.value.files[0];
     }
 
-    form.post(route('user-profile-information.update'), {
-        errorBag: 'updateProfileInformation',
+    form.post('/profile', {
         preserveScroll: true,
         onSuccess: () => clearPhotoFileInput(),
     });
@@ -106,10 +105,27 @@ const updateProfileInformation = () => {
                         </div>
 
                         <div class="w-[576px]">
-                            <div class="relative mb-2 rounded-full w-[200px] h-[200px]">
-                                
+                            <div class="z-0 relative rounded-full w-[200px] h-[200px] overflow-hidden">
+                                <img :src="userInfo.profile_photo_path_url" alt="user-photo" class="object-cover h-full w-full">
+
+                                <input
+                                id="userphoto"
+                                ref="photoInput"
+                                type="file"
+                                class="hidden"
+                                @change="updatePhotoPreview"
+                                >
+                                <button type="button" @click="selectNewPhoto" class="absolute z-10 top-1/2 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-500 h-9 w-[120px] flex justify-center items-center text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                        <path d="M12 9a3.75 3.75 0 1 0 0 7.5A3.75 3.75 0 0 0 12 9Z" />
+                                        <path fill-rule="evenodd" d="M9.344 3.071a49.52 49.52 0 0 1 5.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 0 1-3 3h-15a3 3 0 0 1-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 0 0 1.11-.71l.822-1.315a2.942 2.942 0 0 1 2.332-1.39ZM6.75 12.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Zm12-1.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- <div class="relative mb-2 rounded-full w-[200px] h-[200px] overflow-hidden">
+
                                 <div v-if="userInfo.profile_photo_path" class="mt-2">
-                                    <img v-show="!photoPreview" :src="userInfo.profile_photo_path" alt="user-photo" class="rounded-full w-[200px] h-[200px]">
+                                    <img v-show="!photoPreview" :src="userInfo.profile_photo_path_url" alt="user-photo" class="rounded-full w-[200px] h-[200px]">
 
                                     <img v-show="photoPreview" :src="photoPreview" alt="user-photo" class="rounded-full w-[200px] h-[200px]">
                                 </div>
@@ -118,9 +134,9 @@ const updateProfileInformation = () => {
                                     <img v-show="!photoPreview" src="https://www.svgrepo.com/show/382095/female-avatar-girl-face-woman-user-4.svg" class="rounded-full w-[200px] h-[200px]" alt="user-photo">
                                     <img v-show="photoPreview" :src="photoPreview" alt="user-photo" class="rounded-full w-[200px] h-[200px]">
                                 </div>
-                                
-                                <input  
-                                id="userphoto" 
+
+                                <input
+                                id="userphoto"
                                 ref="photoInput"
                                 type="file"
                                 class="hidden"
@@ -132,7 +148,7 @@ const updateProfileInformation = () => {
                                         <path fill-rule="evenodd" d="M9.344 3.071a49.52 49.52 0 0 1 5.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 0 1-3 3h-15a3 3 0 0 1-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 0 0 1.11-.71l.822-1.315a2.942 2.942 0 0 1 2.332-1.39ZM6.75 12.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Zm12-1.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
                                     </svg>
                                 </button>
-                            </div>
+                            </div> -->
 
                             <InputError :message="photoValidationErrorMessage" />
                         </div>
@@ -148,7 +164,7 @@ const updateProfileInformation = () => {
                                 <InputLabel
                                 for="id_no"
                                 value="ID no"
-                                class="font-medium text-md"                        
+                                class="font-medium text-md"
                                 />
 
                                 <TextInput
@@ -164,7 +180,7 @@ const updateProfileInformation = () => {
                                 <InputLabel
                                 for="emp_type"
                                 value="Employee Type"
-                                class="font-medium text-md"                        
+                                class="font-medium text-md"
                                 />
 
                                 <TextInput
@@ -187,7 +203,7 @@ const updateProfileInformation = () => {
                                 <InputLabel
                                 for="fname"
                                 value="First name"
-                                class="font-medium text-md"                        
+                                class="font-medium text-md"
                                 />
 
                                 <TextInput
@@ -201,7 +217,7 @@ const updateProfileInformation = () => {
                                 <InputLabel
                                 for="mname"
                                 value="Middle name"
-                                class="font-medium text-md"                        
+                                class="font-medium text-md"
                                 />
 
                                 <TextInput
@@ -215,7 +231,7 @@ const updateProfileInformation = () => {
                                 <InputLabel
                                 for="lname"
                                 value="Last name"
-                                class="font-medium text-md"                        
+                                class="font-medium text-md"
                                 />
 
                                 <TextInput
@@ -229,7 +245,7 @@ const updateProfileInformation = () => {
                                 <InputLabel
                                 for="address"
                                 value="Address"
-                                class="font-medium text-md"                        
+                                class="font-medium text-md"
                                 />
 
                                 <TextInput
@@ -242,7 +258,7 @@ const updateProfileInformation = () => {
                     </div>
                 </div>
 
-                <button type="button" class="px-4 py-2 rounded-md text-sm text-white font-medium bg-blue-600 hover:bg-blue-500">Save changes</button>
+                <button type="button" @click.prevent="updateProfileInformation" class="px-4 py-2 rounded-md text-sm text-white font-medium bg-blue-600 hover:bg-blue-500">Save changes</button>
             </div>
         </div>
     </AppLayout>

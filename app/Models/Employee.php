@@ -21,8 +21,16 @@ class Employee extends Model
         'profile_photo_path',
     ];
 
+    protected $appends = [ 'profile_photo_path_url' ];
+
     public function user()
     {
        return $this->belongsTo(User::class);
+    }
+
+    public function getProfilePhotoPathUrlAttribute()
+    {
+        // $url = $this->itemphoto ? asset("images/item_images/" . $this->itemphoto) : "https://512pixels.net/downloads/macos-wallpapers-thumbs/10-14-Night-Thumb.jpg";
+        return $this->profile_photo_path ? asset('images/profile_pictures/' . $this->profile_photo_path) : '';
     }
 }

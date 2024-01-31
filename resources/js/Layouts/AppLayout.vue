@@ -11,7 +11,7 @@ const showingNavigationDropdown = ref(false);
 let isCollapsed = ref(localStorage.getItem("isCollapsed") === "true");
 
 const collapseSidebar = () => {
-    
+
     isCollapsed.value = !isCollapsed.value;
     localStorage.setItem("isCollapsed", isCollapsed.value);
 
@@ -36,16 +36,16 @@ const clearLocalStorage = () => {
                             <img src="../../../public/images/DICT-BANNER-LOGO.png" alt="mdc-logo" class="w-full mt-3">
                             <!-- <h1 v-show="!isCollapsed" class="text-md text-white font-extrabold text-center">MDC-IMS</h1> -->
                         </Link>
-    
+
                     </div>
                     <span class="absolute -right-5 top-5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-1.5 text-center text-sm cursor-pointer peer" @click="collapseSidebar">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[15px] h-[15px] duration-75" :class="[ isCollapsed ? 'rotate-180 peer-hover:translate-x-2' : 'rotate-0 peer-hover:-translate-x-2']">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
-                          </svg>                     
-                    </span> 
-    
+                          </svg>
+                    </span>
+
                     <hr v-show="!isCollapsed" class="mb-4 mt-4 bg-gray-600">
-    
+
                     <span class="text-[10px] mb-2 text-gray-200 select-none font-bold uppercase" :class="[ isCollapsed ? 'mt-24 text-center' : '']">Menu</span>
                     <ul class="space-y-2 font-medium" :class="[ isCollapsed ? 'flex flex-col' : '']">
                         <li>
@@ -91,16 +91,28 @@ const clearLocalStorage = () => {
                                 </template>
 
                                 <template #content>
-                                    <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                                    <DropdownLink :href="route('profile.edit')"> Change Password </DropdownLink>
-                                    <DropdownLink :href="route('logout')" method="post" as="button" @click="clearLocalStorage">
+                                    <DropdownLink :href="route('profile.edit')" class="inline-flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                        </svg>
+                                        Profile
+                                    </DropdownLink>
+                                    <DropdownLink :href="route('profile.edit')" class="inline-flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+                                        </svg>
+                                        Change Password </DropdownLink>
+                                    <DropdownLink :href="route('logout')" method="post" as="button" @click="clearLocalStorage" class="inline-flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                                        </svg>
                                         Log Out
                                     </DropdownLink>
                                 </template>
                             </Dropdown>
                         </div>
                     </div>
-                    
+
                 </div>
                 <header class="" v-if="$slots.header">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
