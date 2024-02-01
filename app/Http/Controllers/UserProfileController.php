@@ -56,4 +56,13 @@ class UserProfileController extends Controller
 
         return back()->with('success', 'Your profile information has been updated!');
     }
+
+    public function deletePhoto()
+    {
+        $emp = Employee::where('user_id', auth()->user()->id)->first();
+
+        $emp->update(['profile_photo_path' => null]);
+
+        return back()->with('success', 'Your profile photo has been deleted.');
+    }
 }

@@ -26,15 +26,14 @@ const clearLocalStorage = () => {
 
 <template>
     <div>
-        <!-- <div class="sticky top-0 h-22 w-full bg-green-300"> blah blah</div> -->
         <div class="flex items-start min-h-screen bg-gray-50">
-            <nav class="sticky top-0 z-10 bg-blue-700 min-h-screen duration-300" :class="[ !isCollapsed ? 'w-64' : 'w-16' ]">
+            <nav class="sticky top-0 z-10 bg-[#087ec2ff] min-h-screen duration-300" :class="[ !isCollapsed ? 'w-64' : 'w-16' ]">
                 <div class="relative p-4">
                     <div class="flex" :class="[ !isCollapsed ? 'justify-between items-center' : 'justify-center']">
                         <!-- Logo branding -->
                         <Link :href="route('dashboard')" class="w-full flex items-center space-x-2">
-                            <img src="../../../public/images/DICT-BANNER-LOGO.png" alt="mdc-logo" class="w-full mt-3">
-                            <!-- <h1 v-show="!isCollapsed" class="text-md text-white font-extrabold text-center">MDC-IMS</h1> -->
+                            <img v-if="!isCollapsed" src="../../../public/images/DICT-BANNER-LOGO.png" alt="mdc-logo" class="w-full">
+                            <img v-else src="../../../public/images/Logo.png" alt="mdc-logo" class="w-full">
                         </Link>
 
                     </div>
@@ -44,27 +43,43 @@ const clearLocalStorage = () => {
                           </svg>
                     </span>
 
-                    <hr v-show="!isCollapsed" class="mb-4 mt-4 bg-gray-600">
 
                     <span class="text-[10px] mb-2 text-gray-200 select-none font-bold uppercase" :class="[ isCollapsed ? 'mt-24 text-center' : '']">Menu</span>
                     <ul class="space-y-2 font-medium" :class="[ isCollapsed ? 'flex flex-col' : '']">
                         <li>
-                            <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="flex items-center text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-speedometer2" viewBox="0 0 16 16">
-                                    <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
-                                    <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z"/>
-                                    </svg>
-                                <span class="ml-3" v-show="!isCollapsed">Dashboard</span>
-                            </NavLink>
+                            <Link :href="route('dashboard')" class="flex items-center text-white text-sm hover:bg-[#1a9fd4d7] p-2 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                    <path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 0 1 8.25-8.25.75.75 0 0 1 .75.75v6.75H18a.75.75 0 0 1 .75.75 8.25 8.25 0 0 1-16.5 0Z" clip-rule="evenodd" />
+                                    <path fill-rule="evenodd" d="M12.75 3a.75.75 0 0 1 .75-.75 8.25 8.25 0 0 1 8.25 8.25.75.75 0 0 1-.75.75h-7.5a.75.75 0 0 1-.75-.75V3Z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-2" v-show="!isCollapsed">Dashboard</span>
+                            </Link>
                         </li>
                         <li>
+                            <Link :href="route('category.index')" class="flex items-center text-white text-sm hover:bg-[#1a9fd4d7] p-2 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                    <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-2" v-show="!isCollapsed">Categories</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link :href="route('employee.index')" class="flex items-center text-white text-sm hover:bg-[#1a9fd4d7] p-2 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                    <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z" clip-rule="evenodd" />
+                                    <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
+                                </svg>
+                                <span class="ml-2" v-show="!isCollapsed">Manage Employees</span>
+                            </Link>
+                        </li>
+                        <!-- <li>
                             <NavLink :href="route('category.index')" :active="route().current('category.index')" class="flex items-center text-white">
                                 <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.6 8.4h0m-4.7 11.3-6.6-6.6a1 1 0 0 1 0-1.4l7.3-7.4a1 1 0 0 1 .7-.3H18a2 2 0 0 1 2 2v5.5a1 1 0 0 1-.3.7l-7.5 7.5a1 1 0 0 1-1.3 0Z"/>
                                 </svg>
                                 <span class="ml-3" v-show="!isCollapsed">Categories</span>
                             </NavLink>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </nav>
@@ -92,18 +107,19 @@ const clearLocalStorage = () => {
 
                                 <template #content>
                                     <DropdownLink :href="route('profile.edit')" class="inline-flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                         </svg>
                                         Profile
                                     </DropdownLink>
-                                    <DropdownLink :href="route('profile.edit')" class="inline-flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                                    <DropdownLink :href="route('change-password.edit')" class="inline-flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
                                         </svg>
-                                        Change Password </DropdownLink>
+                                        Change password
+                                    </DropdownLink>
                                     <DropdownLink :href="route('logout')" method="post" as="button" @click="clearLocalStorage" class="inline-flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
                                         </svg>
                                         Log Out

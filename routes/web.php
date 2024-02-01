@@ -6,8 +6,10 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\ChangePasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,16 +42,21 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/user/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/user/profile', [UserProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/user/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/user/profile/delete-photo', [UserProfileController::class, 'deletePhoto']);
+
+    Route::get('/user/change-password', [ChangePasswordController::class, 'edit'])->name('change-password.edit');
+    Route::patch('/user/change-password', [ChangePasswordController::class, 'update'])->name('change-password.update');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+    // Manage Employees Routes
+    Route::get('/employees', [EmployeeController::class, 'index'])->name('employee.index');
 });
 
-Route::get('/test', function(){
-    return Inertia::render('test');
-});
 
 Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
 Route::post('/categories/new-category', [CategoryController::class, 'store'])->name('category.store');

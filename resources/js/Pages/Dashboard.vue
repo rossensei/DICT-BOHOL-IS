@@ -8,15 +8,14 @@ import { Head } from '@inertiajs/vue3';
     <Head title="Dashboard" />
 
     <AppLayout>
-        <template #header>
+        <!-- <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
-        </template>
+        </template> -->
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
-                </div>
+            <div class="w-full px-12">
+                <h1 class="text-2xl text-gray-700 font-bold">Dashboard</h1>
+                <!-- <p class="text-sm text-gray-500 mb-4">Ensure your account is using a long, random password to stay secure.</p> -->
             </div>
         </div>
     </AppLayout>

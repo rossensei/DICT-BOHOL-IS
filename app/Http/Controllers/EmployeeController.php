@@ -12,7 +12,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = Employee::select('id', 'user_id', 'id_no', 'fname', 'mname', 'lname', 'emp_type', 'address', 'profile_photo_path')->get();
+        return inertia('Employee/Index', [
+            'employees' => $employees
+        ]);
     }
 
     /**
