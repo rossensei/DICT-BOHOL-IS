@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 
 const props = defineProps({
     employees: Array
@@ -12,8 +12,14 @@ const props = defineProps({
     <AppLayout>
         <div class="py-12">
             <div class="w-full px-12">
-                <h1 class="text-2xl text-gray-700 font-bold">Manage Employees</h1>
-                <p class="text-sm text-gray-500 mb-4">Ensure your account is using a long, random password to stay secure.</p>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-2xl text-gray-700 font-bold">Manage Employees</h1>
+                        <p class="text-sm text-gray-500 mb-4">Ensure your account is using a long, random password to stay secure.</p>
+                    </div>
+
+                    <Link href="/employees/create" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-sm text-white font-medium rounded-md">Add Employee</Link>
+                </div>
 
                 <div class="relative overflow-hidden overflow-x-auto shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

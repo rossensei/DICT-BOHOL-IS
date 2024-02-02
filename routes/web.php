@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
 
     // Manage Employees Routes
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employee.index');
+    Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employee.create');
 });
 
 
