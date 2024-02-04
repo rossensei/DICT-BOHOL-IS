@@ -7,6 +7,7 @@ import InputError from '@/Components/InputError.vue';
 import Modal from '@/Components/Modal.vue';
 import CategoryItem from './components/CategoryItem.vue';
 import CategoryList from './components/CategoryList.vue';
+import CategoryTree from './components/CategoryTree.vue';
 import { Head, useForm, usePage, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -55,6 +56,73 @@ const confirmDelete = () => {
         }
     })
 }
+
+
+const categories = ref([
+    {
+        id: 1,
+        catname: "Category 1",
+        subcategories: [
+            {
+                id: 1,
+                category_id: 1,
+                subcatname: "Subcategory 1",
+            },
+            {
+                id: 3,
+                category_id: 1,
+                subcatname: "Subcategory 2",
+            },
+            {
+                id: 8,
+                category_id: 1,
+                subcatname: "Subcategory 3",
+            },
+        ],
+    },
+    {
+        id: 2,
+        catname: "Category 2",
+        subcategories: [
+            {
+                id: 2,
+                category_id: 2,
+                subcatname: "Subcategory 1",
+            },
+            {
+                id: 4,
+                category_id: 2,
+                subcatname: "Subcategory 2",
+            },
+            {
+                id: 5,
+                category_id: 2,
+                subcatname: "Subcategory 3",
+            },
+        ],
+    },
+    {
+        id: 3,
+        catname: "Category 3",
+        subcategories: [
+            {
+                id: 6,
+                category_id: 3,
+                subcatname: "Subcategory 1",
+            },
+            {
+                id: 7,
+                category_id: 3,
+                subcatname: "Subcategory 2",
+            },
+            {
+                id: 9,
+                category_id: 3,
+                subcatname: "Subcategory 3",
+            },
+        ],
+    },
+])
 </script>
 
 <template>
@@ -68,7 +136,8 @@ const confirmDelete = () => {
         <div class="py-12">
             <div class="w-full px-12">
                 <h1 class="text-2xl text-gray-700 font-bold">Categories</h1>
-                <!-- <p class="text-sm text-gray-500 mb-4">Ensure your account is using a long, random password to stay secure.</p> -->
+                <p class="text-gray-900 mb-4">Add categories, then associate items to them from items page. You can add categories and subcategories as many as you like.</p>
+
                 <!-- Alert -->
                 <WarningAlert v-if="page.props.flash.error" @close="clearErrorMessage" class="mb-4">
                     {{ page.props.flash.error }}
@@ -78,8 +147,7 @@ const confirmDelete = () => {
                     {{ page.props.flash.success }}
                 </SuccessAlert>
 
-                <p class="text-gray-900 mb-4">Add categories, then associate items to them from items page. You can add categories and subcategories as many as you like.</p>
-                <div class="p-4 bg-white shadow-sm w-[600px] rounded-lg border-l-8 border-blue-700 mb-4">
+                <!-- <div class="p-4 bg-white shadow-sm w-[600px] rounded-lg border-l-8 border-blue-700 mb-4">
                     <form class="flex items-center space-x-2" @submit.prevent="submit">
                         <div class="flex-1 relative">
                             <TextInput
@@ -110,15 +178,50 @@ const confirmDelete = () => {
                         </button>
                     </form>
                     <InputError :message="form.errors.catname" />
-                </div>
+                </div> -->
 
-                <h1 class="text-xl font-semibold text-gray-700 mb-2">List of Categories</h1>
+                <!-- <h1 class="text-xl font-semibold text-gray-700 mb-2">List of Categories</h1> -->
                 
-                <div class="p-4 bg-white shadow-sm border rounded-md w-[600px]">
-                    <CategoryList>
-                        <CategoryItem v-for="cat in categories" :key="cat.id" :category="cat" @delete="deleteCategory" />
-                    </CategoryList>
-                </div>
+                <!-- <CategoryList>
+                    <CategoryItem v-for="cat in categories" :key="cat.id" :category="cat" @delete="deleteCategory" />
+                </CategoryList> -->
+                <!-- <div class="p-4 bg-white shadow-sm border rounded-md max-w-4xl w-full divide-y divide-y-200">
+                    <div>
+                        <div class="flex items-center space-x-2 hover:bg-gray-900 hover:opacity-10 p-2">
+                            <button type="button" class="rotate-90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                    </svg>                                  
+                            </button>
+                            <div class="flex-1">
+                                <span class="font-medium">Equipments</span>
+                            </div>
+                        </div>
+                        <div class="border-l-2 border-gray-500 ml-2 p-2">
+                            <div class="pl-4">
+                                Computers
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2 hover:bg-gray-900 hover:opacity-10 p-2">
+                            <button type="button" class="rotate-90">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                    </svg>                                  
+                            </button>
+                            <div class="flex-1">
+                                <span class="font-medium">Equipments</span>
+                            </div>
+                        </div>
+                        <div class="border-l-2 border-gray-500 ml-3.5 p-2">
+                            <div class="pl-4">
+                                Computers
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <CategoryTree :categories="props.categories" />
             </div>
         </div>
     </AppLayout>

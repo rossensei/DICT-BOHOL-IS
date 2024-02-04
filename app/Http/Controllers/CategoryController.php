@@ -14,7 +14,9 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categories = Category::select('id', 'catname')->get();
+        $categories = Category::select('id', 'catname')
+            ->with('subcategories:id,category_id,subcatname')
+            ->get();
 
         return inertia('Category/Index', ['categories' => $categories]);
     }

@@ -7,7 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ChangePasswordController;
 
@@ -65,9 +65,10 @@ Route::get('/categories/edit/{category}', [CategoryController::class, 'edit'])->
 Route::patch('/categories/update/{category}', [CategoryController::class, 'update'])->name('category.update');
 Route::delete('/categories/remove/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
-Route::get('/categories/{category}/subcategories', [SubCategoryController::class, 'index'])->name('subcategory.index');
-Route::post('/categories/{category}/subcategories/new-subcategory', [SubCategoryController::class, 'store'])->name('subcategory.store');
-Route::patch('/subcategories/{subCategory}/update', [SubCategoryController::class, 'update'])->name('subcategory.update');
-Route::delete('/subcategories/{subCategory}/delete', [SubCategoryController::class, 'destroy'])->name('subcategory.destroy');
+// Route::get('/categories/{category}/subcategories', [SubcategoryController::class, 'index'])->name('subcategory.index');
+// Route::post('/categories/{category}/subcategories/new-subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
+Route::post('/subcategories/new-subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
+Route::patch('/subcategories/{subCategory}/update', [SubcategoryController::class, 'update'])->name('subcategory.update');
+Route::delete('/subcategories/{subCategory}/delete', [SubcategoryController::class, 'destroy'])->name('subcategory.destroy');
 
 // require __DIR__.'/auth.php';
