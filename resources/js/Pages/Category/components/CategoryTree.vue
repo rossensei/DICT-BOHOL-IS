@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import AddCategoryForm from './AddCategoryForm.vue';
 import AddSubcategoryForm from './AddSubcategoryForm.vue';
 import CategoryItem from './CategoryItem.vue';
+import SubcategoryItem from './SubcategoryItem.vue';
 import SubcategoryList from './SubcategoryList.vue';
 
 const props = defineProps({
@@ -52,9 +53,7 @@ const toggleCollapse = (categoryId) => {
                                 <AddSubcategoryForm :categoryId="catItem.id"></AddSubcategoryForm>
                             </li>
                             <li id="subcategory-item" v-for="item in catItem.subcategories" :key="item.id">
-                                <div class="p-2">
-                                    {{ item.subcatname }}
-                                </div>
+                                <SubcategoryItem :subcategory="item"></SubcategoryItem>
                             </li>
                         </ul>
                     </Transition>

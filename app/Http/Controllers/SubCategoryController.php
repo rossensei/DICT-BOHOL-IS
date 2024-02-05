@@ -61,7 +61,11 @@ class SubcategoryController extends Controller
      */
     public function update(Request $request, Subcategory $subcategory)
     {
-        //
+        // dd($request->all(), $subcategory);
+        $request->validate(['subcatname' => 'required|string']);
+        $subcategory->update(['subcatname' => $request->subcatname]);
+
+        return back()->with('success', 'Subcategory name has been updated!');
     }
 
     /**
@@ -69,6 +73,6 @@ class SubcategoryController extends Controller
      */
     public function destroy(Subcategory $subcategory)
     {
-        //
+        dd($subcategory);
     }
 }

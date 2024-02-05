@@ -6,7 +6,7 @@ const isVisible = ref(true);
 const emits = defineEmits(['close']);
 </script>
 <template>
-    <div v-if="isVisible" class="flex p-3 space-x-3 rounded-lg bg-red-200">
+    <div v-if="isVisible" class="flex p-4 space-x-3 rounded-lg bg-red-200">
         <div class="shrink-0">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-red-700">
@@ -21,7 +21,7 @@ const emits = defineEmits(['close']);
             </p>
         </div>
         <div class="shrink-0">
-            <button type="button" @click="emits('close')">
+            <button type="button" @click="emits('close')" class="hover:bg-red-300 rounded-lg hover:text-red-700 p-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
