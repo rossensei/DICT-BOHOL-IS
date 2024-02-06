@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,55 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+
+        $request->validate([
+            'id_no' => 'required|unique:employees',
+            'fname' => 'required|string',
+            'mname' => 'required|string',
+            'lname' => 'required|string',
+            'address' => 'required|string',
+            'emp_type' => 'required|string',
+            'status' => 'required|string',
+            'role' => 'required|string',
+            'photo' => 'required|image:png,jpeg,jpg|max:2048',
+        ]);
+
+        // Create User
+        $credentials = [
+            'username' => $request->id_no,
+            'password' => strtoupper(substr($request->lname, 0, 3)).'_'.$request->id_no
+        ];
+
+        $user = User::create([
+            'username' => $credentials['username'],
+            'password' => bcrypt($credentials['password'])
+        ]);
+
+        // Create Employee
+
+        $employee = [
+            'id_no' => $request->id_no,
+            'fname' => $request->fname,
+            'mname' => $request->mname,
+            'lname' => $request->lname,
+            'address' => $request->address,
+            'status' => $request->status,
+            'emp_type' => $request->emp_type,
+        ];
+
+        if($request->photo) {
+            $filename = time().'.'.$request->photo->extension();
+            $request->photo->move(public_path('images/profile_pictures'), $filename);
+            $employee['profile_photo_path'] = $filename;
+        }
+
+        $user->employee()->create($employee);
+
+        return inertia('Employee/NewEmployee', [
+            'message' => 'Employee successfully created!',
+            'credentials' => $credentials
+        ]);
     }
 
     /**
@@ -47,7 +96,10 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        // dd($employee);
+        return inertia('Employee/Edit', [
+            'employee' => $employee
+        ]);
     }
 
     /**
@@ -55,7 +107,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        dd($request->all());
     }
 
     /**

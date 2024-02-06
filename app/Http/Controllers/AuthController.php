@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,12 +26,14 @@ class AuthController extends Controller
         ]);
 
         if(Auth::attempt($credentials)) {
-            return redirect()->intended('/dashboard');
+            // $user = User::where('id', Auth::user()->id)->first();
+
+            // dd($user);
         } else {
             return back()->withErrors([
                 'username' => 'These credentials do not match our records.'
             ]);
-        }
+        }   
     }
 
     public function logout()

@@ -6,15 +6,20 @@ import InputError from '@/Components/InputError.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
+const props = defineProps({
+    employee: Object
+})
+
 const form = useForm({
+    _method: 'PUT',
     photo: null,
-    fname: '', 
-    mname: '', 
-    lname: '',
-    address: '', 
-    id_no: '',
-    emp_type: '', 
-    status: '',
+    fname: props.employee.fname, 
+    mname: props.employee.mname, 
+    lname: props.employee.lname,
+    address: props.employee.address, 
+    id_no: props.employee.id_no,
+    emp_type: props.employee.emp_type, 
+    status: props.employee.status,
     role: ''
 })
 
@@ -35,37 +40,23 @@ const updatePhotoPreview = () => {
     reader.readAsDataURL(photo);
 }
 
-const clearPhotoFileInput = () => {
-    if (photoInput.value?.value) {
-        photoInput.value.value = null;
-    }
-};
-
 const submit = () => {
     if (photoInput.value) {
         form.photo = photoInput.value.files[0];
     }
-
-    form.post('/employees/create', {
-        onSuccess: () => {
-            clearPhotoFileInput();
-            form.reset();
-        },
-    });
+    
+    form.post(`/employees/update/${props.employee.id}`)
 }
 </script>
 
 <template>
-    <Head title="New Employee" />
+    <Head :title="`${props.employee.lname}, ${props.employee.fname}, ${props.employee.mname[0]}.`" />
 
     <AppLayout>
         <div class="py-12">
             <div class="w-full px-12">
-                <h1 class="text-2xl text-gray-700 font-bold">Create new employee</h1>
-                <p class="text-sm text-gray-500 mb-8">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus maxime perferendis culpa accusantium expedita nam consequatur aspernatur sequi ullam.</p>
-                <!-- <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/fnames/helene-engels.png" alt="" class="rounded-full w-20"> -->
-                
-                <!-- <h1 class="text-lg font-semibold text-gray-700">General Information</h1> -->
+                <h1 class="text-2xl text-gray-700 font-bold mb-8">Edit employee details</h1>
+
                 <form @submit.prevent="submit">
                     <div class="max-w-4xl w-full">
                         <div class="flex items-start space-x-3 mb-4">
@@ -188,7 +179,7 @@ const submit = () => {
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
                                         </svg>
-                                        Choose file
+                                        Change photo
                                         <input ref="photoInput" type="file" id="photo" class="hidden" @change="updatePhotoPreview">
                                     </label>
 
@@ -199,7 +190,7 @@ const submit = () => {
 
                                 <div class="flex items-center justify-center bg-gray-200 mt-4 w-[300px] h-[300px] rounded-lg overflow-hidden relative">
 
-                                    <button v-show="photoPreview" type="button" @click="photoPreview = null" class="absolute top-3 right-3 bg-gray-500 hover:bg-gray-400 p-2 rounded-full">
+                                    <!-- <button v-show="photoPreview" type="button" @click="photoPreview = null" class="absolute top-3 right-3 bg-gray-500 hover:bg-gray-400 p-2 rounded-full">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 stroke-white">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                         </svg>
@@ -209,7 +200,14 @@ const submit = () => {
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                                     </svg>
 
-                                    <img v-show="photoPreview" :src="photoPreview" alt="user-photo" class="object-cover h-full w-full">
+                                    <img v-show="photoPreview" :src="photoPreview" alt="user-photo" class="object-cover h-full w-full"> -->
+                                    <img v-if="props.employee.profile_photo_path && !photoPreview" :src="props.employee.profile_photo_path_url" alt="employee-photo" class="object-cover h-full w-full">
+
+                                    <img v-else-if="photoPreview" :src="photoPreview" alt="employee-photo" class="object-cover h-full w-full">
+
+                                    <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-gray-500">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                    </svg>
                                 </div>
 
                                 
@@ -217,7 +215,7 @@ const submit = () => {
                             </div>
                         </div>
 
-                        <button type="submit" class="px-4 py-2 text-white text-sm font-medium bg-blue-600 hover:bg-blue-500 rounded-lg">Submit</button>
+                        <button type="submit" class="px-4 py-2 text-white text-sm font-medium bg-blue-600 hover:bg-blue-500 rounded-lg">Update</button>
                     </div>
                 </form>
             </div>

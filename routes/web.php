@@ -56,6 +56,9 @@ Route::middleware('auth')->group(function () {
     // Manage Employees Routes
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employee.index');
     Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employee.create');
+    Route::post('/employees/create', [EmployeeController::class, 'store'])->name('employee.store');
+    Route::get('/employees/edit/{employee}', [EmployeeController::class, 'edit'])->name('employee.edit');
+    Route::put('/employees/update/{employee}', [EmployeeController::class, 'update'])->name('employee.update');
 });
 
 

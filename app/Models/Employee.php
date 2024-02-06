@@ -18,6 +18,7 @@ class Employee extends Model
         'lname',
         'emp_type',
         'address',
+        'status',
         'profile_photo_path',
     ];
 
