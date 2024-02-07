@@ -66,7 +66,8 @@ const submit = () => {
                                 <TextInput
                                 id="id_no"
                                 v-model="form.id_no"
-                                type="number"
+                                type="text"
+                                maxlength="6"
                                 class="w-full"
                                 />
                                 <InputError :message="form.errors.id_no" />
@@ -93,7 +94,6 @@ const submit = () => {
                                 id="mname"
                                 v-model="form.mname"
                                 type="text"
-                                maxlength="6"
                                 class="w-full "
                                 />
                                 <InputError :message="form.errors.mname" />

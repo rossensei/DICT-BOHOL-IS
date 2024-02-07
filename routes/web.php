@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
@@ -59,6 +60,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/employees/create', [EmployeeController::class, 'store'])->name('employee.store');
     Route::get('/employees/edit/{employee}', [EmployeeController::class, 'edit'])->name('employee.edit');
     Route::put('/employees/update/{employee}', [EmployeeController::class, 'update'])->name('employee.update');
+    Route::delete('/employees/delete/{employee}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
+    // add route for deleting photo (optional)
+
+    // Manage Offices
+    Route::get('/offices', [OfficeController::class, 'index'])->name('office.index');
 });
 
 

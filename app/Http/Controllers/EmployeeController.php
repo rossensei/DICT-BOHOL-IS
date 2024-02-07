@@ -79,10 +79,12 @@ class EmployeeController extends Controller
 
         $user->employee()->create($employee);
 
-        return inertia('Employee/NewEmployee', [
-            'message' => 'Employee successfully created!',
-            'credentials' => $credentials
-        ]);
+        // return inertia('Employee/NewEmployee', [
+        //     'message' => 'Employee successfully created!',
+        //     'credentials' => $credentials
+        // ]);
+
+        return redirect(route('employee.index'))->with('success', 'A new employee has been added!');
     }
 
     /**
@@ -109,7 +111,6 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        // dd($request->all());
         $request->validate([
             'id_no' => ['required','numeric', Rule::unique(Employee::class)->ignore($employee->id)],
             'fname' => 'required|string',
@@ -122,15 +123,23 @@ class EmployeeController extends Controller
             'photo' => 'image:png,jpeg,jpg|max:2048',
         ]);
 
-        $employee->update([
+        $data = [
             'id_no' => $request->id_no,
             'fname' => $request->fname,
             'mname' => $request->mname,
             'lname' => $request->lname,
             'address' => $request->address,
-            'emp_type' => $request->emp_type,
             'status' => $request->status,
-        ]);
+            'emp_type' => $request->emp_type,
+        ];
+
+        if($request->photo) {
+            $filename = time().'.'.$request->photo->extension();
+            $request->photo->move(public_path('images/profile_pictures'), $filename);
+            $data['profile_photo_path'] = $filename;
+        }
+
+        $employee->update($data);
 
         return redirect(route('employee.index'))->with('success', 'Employee details successfully updated!');
     }
@@ -140,6 +149,8 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+
+        return back()->with('success', 'Employee has been deleted!');
     }
 }
