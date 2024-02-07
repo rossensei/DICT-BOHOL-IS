@@ -75,8 +75,10 @@ const submit = () => {
                                 <TextInput
                                 id="id_no"
                                 v-model="form.id_no"
-                                type="number"
+                                type="text"
                                 class="w-full"
+                                maxlength="6"
+                                :class="{ 'border-red-600' : form.errors.id_no }"
                                 />
                                 <InputError :message="form.errors.id_no" />
                             </div>
@@ -90,6 +92,7 @@ const submit = () => {
                                 v-model="form.fname"
                                 type="text"
                                 class="w-full "
+                                :class="{ 'border-red-600' : form.errors.fname }"
                                 />
                                 <InputError :message="form.errors.fname" />
                             </div>
@@ -103,6 +106,7 @@ const submit = () => {
                                 v-model="form.mname"
                                 type="text"
                                 class="w-full "
+                                :class="{ 'border-red-600' : form.errors.mname }"
                                 />
                                 <InputError :message="form.errors.mname" />
                             </div>
@@ -116,6 +120,7 @@ const submit = () => {
                                 v-model="form.lname"
                                 type="text"
                                 class="w-full "
+                                :class="{ 'border-red-600' : form.errors.lname }"
                                 />
                                 <InputError :message="form.errors.lname" />
                             </div>
@@ -129,6 +134,7 @@ const submit = () => {
                                 v-model="form.address"
                                 type="text"
                                 class="w-full "
+                                :class="{ 'border-red-600' : form.errors.address }"
                                 autocomplete="address"
                                 />
                                 <InputError :message="form.errors.address" />
@@ -139,7 +145,7 @@ const submit = () => {
                             <InputLabel for="emp_type" value="Employee Type" class="shrink-0 w-[150px]" />
 
                             <div class="block w-full">
-                                <select v-model="form.emp_type" id="emp_type" class="w-full rounded-lg border-gray-300">
+                                <select v-model="form.emp_type" id="emp_type" class="w-full rounded-lg border-gray-300" :class="{ 'border-red-600' : form.errors.emp_type }">
                                     <option value="">Select type</option>
                                     <option value="Plantilla">Plantilla</option>
                                     <option value="Contract of Service">Contract of Service</option>
@@ -152,7 +158,7 @@ const submit = () => {
                             <InputLabel for="status" value="Status" class="shrink-0 w-[150px]" />
 
                             <div class="block w-full">
-                                <select v-model="form.status" id="status" class="w-full rounded-lg border-gray-300">
+                                <select v-model="form.status" id="status" class="w-full rounded-lg border-gray-300" :class="{ 'border-red-600' : form.errors.status }">
                                     <option value="">Select status</option>
                                     <option value="Active">Active</option>
                                     <option value="Inactive">Inactive</option>

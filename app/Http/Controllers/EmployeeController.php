@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class EmployeeController extends Controller
 {
@@ -13,7 +14,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::select('id', 'user_id', 'id_no', 'fname', 'mname', 'lname', 'emp_type', 'address', 'profile_photo_path')->get();
+        $employees = Employee::select('id', 'user_id', 'id_no', 'fname', 'mname', 'lname', 'emp_type', 'address', 'profile_photo_path')
+            ->paginate(8);
         return inertia('Employee/Index', [
             'employees' => $employees
         ]);
@@ -43,7 +45,7 @@ class EmployeeController extends Controller
             'emp_type' => 'required|string',
             'status' => 'required|string',
             'role' => 'required|string',
-            'photo' => 'required|image:png,jpeg,jpg|max:2048',
+            'photo' => 'image:png,jpeg,jpg|max:2048',
         ]);
 
         // Create User
@@ -107,7 +109,30 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        dd($request->all());
+        // dd($request->all());
+        $request->validate([
+            'id_no' => ['required','numeric', Rule::unique(Employee::class)->ignore($employee->id)],
+            'fname' => 'required|string',
+            'mname' => 'required|string',
+            'lname' => 'required|string',
+            'address' => 'required|string',
+            'emp_type' => 'required|string',
+            'status' => 'required|string',
+            'role' => 'required|string',
+            'photo' => 'image:png,jpeg,jpg|max:2048',
+        ]);
+
+        $employee->update([
+            'id_no' => $request->id_no,
+            'fname' => $request->fname,
+            'mname' => $request->mname,
+            'lname' => $request->lname,
+            'address' => $request->address,
+            'emp_type' => $request->emp_type,
+            'status' => $request->status,
+        ]);
+
+        return redirect(route('employee.index'))->with('success', 'Employee details successfully updated!');
     }
 
     /**

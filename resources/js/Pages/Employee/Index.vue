@@ -1,9 +1,10 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+import Tooltip from '@/Components/Tooltip.vue';
 
 const props = defineProps({
-    employees: Array
+    employees: Object
 })
 </script>
 
@@ -46,7 +47,7 @@ const props = defineProps({
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="emp in employees" :key="emp.id" class="bg-white hover:bg-gray-50">
+                            <tr v-for="emp in employees.data" :key="emp.id" class="bg-white hover:bg-gray-50">
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                     {{ emp.id_no }}
                                 </th>
@@ -65,41 +66,11 @@ const props = defineProps({
                                     Administrator
                                 </td>
                                 <td class="px-6 py-4">
-                                    <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
-                                    <div
-                                    class="
-                                    relative
-                                    before:absolute
-                                    before:content-[attr(data-tip)]
-                                    before:px-3 before:py-2
-                                    before:left-1/2 before:-top-3
-                                    before:w-max before:max-w-xs
-                                    before:-translate-x-1/2 before:-translate-y-full
-                                    before:bg-gray-700 before:text-white
-                                    before:rounded-md before:opacity-0
-                                    before:transition-all
-
-                                    after:absolute
-                                    after:left-1/2 after:-top-3
-                                    after:h-0 after:w-0
-                                    after:-translate-x-1/2 after:border-8
-                                    after:border-t-gray-700
-                                    after:border-l-transparent
-                                    after:border-b-transparent
-                                    after:border-r-transparent
-                                    after:opacity-0
-                                    after:transition-all
-
-                                    hover:before:opacity-100 hover:after:opacity-100
-                                    "
-                                    data-tip="Edit"
-                                    >
-                                        <Link :href="`/employees/edit/${emp.id}`" class="w-8 h-8 flex justify-center items-center hover:bg-gray-200 rounded-full">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                                            </svg>
-                                        </Link>
-                                    </div>
+                                    <Link id="edit-button" :href="`/employees/edit/${emp.id}`" data-tool-tip="Edit" class="w-8 h-8 flex justify-center items-center hover:bg-gray-200 rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                        </svg>
+                                    </Link>
                                 </td>
                             </tr>
                         </tbody>
@@ -109,3 +80,29 @@ const props = defineProps({
         </div>
     </AppLayout>
 </template>
+
+<style scoped>
+#edit-button[data-tool-tip] {
+    position: relative;
+}
+
+#edit-button[data-tool-tip]::before {
+    content: attr(data-tool-tip);
+    display: block;
+    position: absolute;
+    background-color: #374151;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: .8em;
+    bottom: 100%;
+    left: 50%;
+    white-space: nowrap;
+    transform: scale(0);
+    transition: transform ease-out 150ms;
+}
+
+#edit-button[data-tool-tip]:hover::before {
+    transform: scale(1);
+}
+</style>

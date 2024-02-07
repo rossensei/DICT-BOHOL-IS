@@ -93,6 +93,7 @@ const submit = () => {
                                 id="mname"
                                 v-model="form.mname"
                                 type="text"
+                                maxlength="6"
                                 class="w-full "
                                 />
                                 <InputError :message="form.errors.mname" />
