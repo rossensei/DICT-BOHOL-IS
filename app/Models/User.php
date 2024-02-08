@@ -6,12 +6,13 @@ namespace App\Models;
 use App\Models\Employee;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -47,4 +48,16 @@ class User extends Authenticatable
     {
        return $this->hasOne(Employee::class);
     }
+
+    // public function getRole()
+    // {
+    //     // Check if the user has any roles assigned
+    //     if (is_array($this->roles)) {
+    //         // Retrieve the first role from the roles array
+    //         return $this->roles->first();
+    //     }
+
+    //     // If no roles are assigned, return null
+    //     return null;
+    // }
 }

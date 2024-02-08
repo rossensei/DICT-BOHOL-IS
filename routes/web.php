@@ -53,6 +53,19 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    // Categories & Subcategories routes
+    Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
+    Route::post('/categories/new-category', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/categories/edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::patch('/categories/update/{category}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/categories/remove/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+    // Route::get('/categories/{category}/subcategories', [SubcategoryController::class, 'index'])->name('subcategory.index');
+    // Route::post('/categories/{category}/subcategories/new-subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
+    Route::post('/subcategories/new-subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
+    Route::patch('/subcategories/{subcategory}/update', [SubcategoryController::class, 'update'])->name('subcategory.update');
+    Route::delete('/subcategories/{subcategory}/delete', [SubcategoryController::class, 'destroy'])->name('subcategory.destroy');
+
 
     // Manage Employees Routes
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employee.index');
@@ -66,18 +79,5 @@ Route::middleware('auth')->group(function () {
     // Manage Offices
     Route::get('/offices', [OfficeController::class, 'index'])->name('office.index');
 });
-
-
-Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
-Route::post('/categories/new-category', [CategoryController::class, 'store'])->name('category.store');
-Route::get('/categories/edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
-Route::patch('/categories/update/{category}', [CategoryController::class, 'update'])->name('category.update');
-Route::delete('/categories/remove/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
-
-// Route::get('/categories/{category}/subcategories', [SubcategoryController::class, 'index'])->name('subcategory.index');
-// Route::post('/categories/{category}/subcategories/new-subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
-Route::post('/subcategories/new-subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
-Route::patch('/subcategories/{subcategory}/update', [SubcategoryController::class, 'update'])->name('subcategory.update');
-Route::delete('/subcategories/{subcategory}/delete', [SubcategoryController::class, 'destroy'])->name('subcategory.destroy');
 
 // require __DIR__.'/auth.php';

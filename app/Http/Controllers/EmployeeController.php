@@ -14,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::select('id', 'user_id', 'id_no', 'fname', 'mname', 'lname', 'emp_type', 'status', 'address', 'profile_photo_path')
+        $employees = Employee::with(['user:id', 'user.roles:id,name'])
             ->paginate(4)
             ->onEachSide(0);
         return inertia('Employee/Index', [

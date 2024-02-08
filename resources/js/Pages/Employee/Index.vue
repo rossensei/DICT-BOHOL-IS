@@ -23,10 +23,6 @@ const closeSuccessAlert = () => {
 }
 
 const perPage = ref(4);
-
-let name = "lorrence";
-name = 20;
-console.log(name)
 </script>
 
 <template>
