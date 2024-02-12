@@ -10,9 +10,24 @@ class OfficeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return inertia('Office/Index');
+        $baseQuery = Office::query();
+
+        if($request->search) {
+            $baseQuery->where('office_name', 'LIKE', "%$request->search%");
+        }
+
+        if($request->classification) {
+            $baseQuery->where('classification', 'LIKE', "%$request->classification%");
+        }
+
+        $offices = $baseQuery->get();
+
+        return inertia('Office/Index', [
+            'offices' => $offices,
+            'filters' => $request->only(['search', 'classification'])
+        ]);
     }
 
     /**

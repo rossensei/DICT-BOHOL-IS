@@ -35,7 +35,7 @@ use App\Http\Controllers\ChangePasswordController;
 Route::middleware('guest')->group(function () {
     Route::get('/', [AuthController::class, 'loginForm']);
     Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'authenticate']);
+    Route::post('/login', [AuthController::class, 'store']);
 });
 
 Route::get('/dashboard', function () {
@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/change-password', [ChangePasswordController::class, 'edit'])->name('change-password.edit');
     Route::patch('/user/change-password', [ChangePasswordController::class, 'update'])->name('change-password.update');
 
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
     // Categories & Subcategories routes
     Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
@@ -78,6 +78,11 @@ Route::middleware('auth')->group(function () {
 
     // Manage Offices
     Route::get('/offices', [OfficeController::class, 'index'])->name('office.index');
+    Route::get('/offices/create', [OfficeController::class, 'create'])->name('office.create');
+    Route::post('/offices', [OfficeController::class, 'store'])->name('office.store');
+    Route::get('/offices/edit/{office}', [OfficeController::class, 'edit'])->name('office.edit');
+    Route::patch('/offices/{office}', [OfficeController::class, 'update'])->name('office.update');
+    Route::delete('/offices/{office}', [OfficeController::class, 'destroy'])->name('office.destroy');
 });
 
 // require __DIR__.'/auth.php';

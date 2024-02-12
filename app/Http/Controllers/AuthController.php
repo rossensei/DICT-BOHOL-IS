@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthController extends Controller
 {
@@ -17,29 +19,49 @@ class AuthController extends Controller
         ]);
     }
 
-    public function authenticate(Request $request)
+    public function store(LoginRequest $request)
     {
-        
-        $credentials = $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
+        $request->authenticate();
 
-        if(Auth::attempt($credentials)) {
-            // $user = User::where('id', Auth::user()->id)->first();
+        $request->session()->regenerate();
 
-            // dd($user);
-        } else {
-            return back()->withErrors([
-                'username' => 'These credentials do not match our records.'
-            ]);
-        }   
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
-    public function logout()
-    {
-        Auth::logout();
+    // public function authenticate(Request $request)
+    // {
+        
+    //     $credentials = $request->validate([
+    //         'username' => 'required',
+    //         'password' => 'required',
+    //     ]);
 
-        return redirect('/login')->with('success', 'You have been logged out!');
+    //     if(Auth::attempt($credentials)) {
+    //         // $user = User::where('id', Auth::user()->id)->first();
+
+    //         // dd($user);
+    //     } else {
+    //         return back()->withErrors([
+    //             'username' => 'These credentials do not match our records.'
+    //         ]);
+    //     }   
+    // }
+
+    // public function logout()
+    // {
+    //     Auth::logout();
+
+    //     return redirect('/login')->with('success', 'You have been logged out!');
+    // }
+
+    public function destroy(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

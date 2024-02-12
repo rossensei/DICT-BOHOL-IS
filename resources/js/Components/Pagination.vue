@@ -77,7 +77,7 @@ const model = defineModel({
             </nav>
 
             <span class="text-sm mt-2.5 text-neutral-600 whitespace-nowrap flex justify-center">
-                {{ props.data.from }}-{{ props.data.to }} of {{ props.data.total }} employees
+                {{ props.data.from }}-{{ props.data.to }} of {{ props.data.total }} entries
             </span>
 
         </div>

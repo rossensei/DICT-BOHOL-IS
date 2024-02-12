@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Office;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class OfficeSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class OfficeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Office::factory(30)->create();
     }
 }

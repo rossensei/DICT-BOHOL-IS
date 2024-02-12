@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
+import FallbackUserPhoto from '@/Components/FallbackUserPhoto.vue';
 import WarningAlert from '@/Components/WarningAlert.vue';
 import SuccessAlert from '@/Components/SuccessAlert.vue';
 import { Head, useForm, router, usePage } from '@inertiajs/vue3';
@@ -112,7 +113,9 @@ const clearSuccessMessage = () => {
                                 <div class="relative rounded-full w-[200px] h-[200px] overflow-hidden group">
                                     <img v-show="userInfo.profile_photo_path_url && !photoPreview" :src="userInfo.profile_photo_path_url" alt="user-photo" class="object-cover h-full w-full">
 
-                                    <img v-show="!userInfo.profile_photo_path_url && !photoPreview" src="https://www.svgrepo.com/show/382095/female-avatar-girl-face-woman-user-4.svg" alt="user-photo" class="object-cover h-full w-full">
+                                    <div v-show="!userInfo.profile_photo_path_url && !photoPreview" class="object-cover h-full w-full flex items-center justify-center bg-gray-200">
+                                        <span class="text-5xl font-semibold text-gray-600">{{ `${ props.userInfo.fname[0] }${ $props.userInfo.lname[0] }` }}</span>
+                                    </div>
                                     
                                     <img v-show="photoPreview" :src="photoPreview" alt="user-photo" class="object-cover h-full w-full">
 

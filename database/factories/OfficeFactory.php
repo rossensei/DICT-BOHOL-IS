@@ -17,7 +17,9 @@ class OfficeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'office_name' => fake()->words(3, true),
+            'location' => fake()->sentence(3),
+            'classification' => fake()->randomElement(['DICT-DTC', 'Tech4ED Center', 'Tech4ED Center', 'DICT-DTC',]),
         ];
     }
 }
