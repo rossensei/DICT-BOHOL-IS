@@ -93,7 +93,13 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        $credentials = [
+            'username' => $employee->id_no,
+            'password' => strtoupper(substr($employee->lname, 0, 3)).'_'.$employee->id_no
+        ];
+
+        // dd($credentials);
+        return inertia('Employee/Credentials', [ 'credentials' => $credentials ]);
     }
 
     /**

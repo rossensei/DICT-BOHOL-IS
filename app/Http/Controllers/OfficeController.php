@@ -18,15 +18,16 @@ class OfficeController extends Controller
             $baseQuery->where('office_name', 'LIKE', "%$request->search%");
         }
 
-        if($request->classification) {
-            $baseQuery->where('classification', 'LIKE', "%$request->classification%");
+        if(is_array($request->classifications)) {
+            // $baseQuery->where('classification', 'LIKE', "%$request->classification%");
+            $baseQuery->whereIn('classification', $request->classifications);
         }
 
         $offices = $baseQuery->get();
 
         return inertia('Office/Index', [
             'offices' => $offices,
-            'filters' => $request->only(['search', 'classification'])
+            'filters' => $request->only(['search', 'classifications'])
         ]);
     }
 

@@ -49,6 +49,11 @@ class User extends Authenticatable
        return $this->hasOne(Employee::class);
     }
 
+    public function getUserRole()
+    {
+        return $this->getRoleNames()->first();
+    }
+
     // public function getRole()
     // {
     //     // Check if the user has any roles assigned

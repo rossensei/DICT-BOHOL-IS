@@ -3,7 +3,6 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
-    message: String,
     credentials: Object
 })
 </script>
@@ -13,10 +12,9 @@ const props = defineProps({
 
     <AppLayout>
         <div class="py-12">
-            <div class="w-full px-12 flex items-center justify-center">
-                <div class="bg-white rounded-lg w-[600px] h-[400px] shadow">
-                    
-                </div>
+            <div class="w-full px-12">
+                <h1 class="text-2xl text-gray-700 font-bold">Default Login Credentials</h1>
+                <p class="text-sm text-gray-500 mb-4">{{ props.credentials.username }}  {{ props.credentials.password }}</p>
             </div>
         </div>
     </AppLayout>

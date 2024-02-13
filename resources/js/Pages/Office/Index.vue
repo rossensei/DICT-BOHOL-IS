@@ -16,20 +16,20 @@ const props = defineProps({
 
 const params = ref({
     search: props.filters?.search,
-    classification: props.filters?.classification,
+    classifications: props.filters?.classifications,
 })
 
 watch(() => params, debounce(() => {
-    // console.log(params.value.search)
     const q = params.value;
 
     Object.keys(q).forEach(key => {
-        if(q[key] === undefined || q[key] === '' || q[key] === null) {
-            delete q[key];
-        }
+        // if((Array.isArray(q[key]) && q[key].length === 0) || q[key] === '' || q[key] === null) {
+        //     delete q[key];
+        // }
+        console.log(q[key])
     })
 
-    router.get('/offices', q, { preserveState: true, replace: true });
+    // router.get('/offices', q, { preserveState: true, replace: true });
 }, 300), {
     deep: true,
 })
@@ -44,40 +44,51 @@ watch(() => params, debounce(() => {
                 <h1 class="text-2xl text-gray-700 font-bold">Manage Offices</h1>
                 <p class="text-sm text-gray-500 mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
 
-                <div class="flex justify-between items-center mb-4">    
-                    <!-- Search Input-->
-                    <label for="search" class="relative">
-                        <input 
-                        id="search"
-                        v-model="params.search"
-                        type="text" 
-                        class="rounded-lg text-sm pl-8 w-[200px] focus:w-[300px] transition-[width] ease-out duration-150 border-gray-300" 
-                        placeholder="Search for office"
-                        >
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center space-x-2">
 
-                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                            </svg>
-                        </span>
-                    </label>
+                        <Dropdown align="left" width="48">
+                            <template #trigger>
+                                <button type="button" class="px-4 w py-2 text-sm text-white font-medium bg-blue-700 hover:bg-blue-600 rounded-lg">Filter</button>
+                            </template>
+                            <template #content>
+                                <div class="p-2">
+                                    <p class="text-md font-medium mb-1">Classification</p>
+                                    <ul class="text-sm text-gray-600">
+                                        <li>
+                                            <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                                <input id="checkbox-item-1" type="checkbox" v-model="params.classifications" value="DICT-DTC" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                                <label for="checkbox-item-1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">DICT-DTC</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                                <input id="checkbox-item-2" type="checkbox" v-model="params.classifications" value="Tech4ED Center" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                                <label for="checkbox-item-2" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Tech4ED Center</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </template>
+                        </Dropdown>
 
-                    <Dropdown align="right" width="48">
-                        <template #trigger>
-                            <button type="button" class="px-4 py-2 text-sm text-white font-medium bg-blue-700 hover:bg-blue-600 rounded-lg inline-flex items-center">
-                                Filter
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        <!-- Search Input-->
+                        <label for="search" class="relative">
+                            <input 
+                            id="search"
+                            v-model="params.search"
+                            type="text" 
+                            class="rounded-lg text-sm pl-8 w-[200px] focus:w-[300px] transition-[width] ease-out border-gray-300" 
+                            placeholder="Search for office"
+                            >
+
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
-                            </button>
-                        </template>
-                        <template #content>
-                            <ul>
-                                <li>DICT-DTC</li>
-                                <li>Tech4ED Center</li>
-                            </ul>
-                        </template>
-                    </Dropdown>
+                            </span>
+                        </label>
+                    </div>
                 </div>
 
                 <Table>

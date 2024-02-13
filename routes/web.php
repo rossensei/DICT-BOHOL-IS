@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/employees/edit/{employee}', [EmployeeController::class, 'edit'])->name('employee.edit');
     Route::put('/employees/update/{employee}', [EmployeeController::class, 'update'])->name('employee.update');
     Route::delete('/employees/delete/{employee}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
+    Route::get('/employees/logon-credentials/{employee}', [EmployeeController::class, 'show'])->name('employee.show');
     // add route for deleting photo (optional)
 
     // Manage Offices
