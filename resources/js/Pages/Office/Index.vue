@@ -16,23 +16,26 @@ const props = defineProps({
 
 const params = ref({
     search: props.filters?.search,
-    classifications: props.filters?.classifications,
+    classification: props.filters?.classification,
 })
 
 watch(() => params, debounce(() => {
     const q = params.value;
 
     Object.keys(q).forEach(key => {
-        // if((Array.isArray(q[key]) && q[key].length === 0) || q[key] === '' || q[key] === null) {
-        //     delete q[key];
-        // }
-        console.log(q[key])
+        if(q[key] === 'undefined' || q[key] === '' || q[key] === null) {
+            delete q[key];
+        }
     })
 
-    // router.get('/offices', q, { preserveState: true, replace: true });
+    router.get('/offices', q, { preserveState: true, replace: true });
 }, 300), {
     deep: true,
 })
+
+const clearFilter = () => {
+    params.value.classification = null;
+}
 </script>
 
 <template>
@@ -49,25 +52,34 @@ watch(() => params, debounce(() => {
 
                         <Dropdown align="left" width="48">
                             <template #trigger>
-                                <button type="button" class="px-4 w py-2 text-sm text-white font-medium bg-blue-700 hover:bg-blue-600 rounded-lg">Filter</button>
+                                <button type="button" class="px-4 w py-2 text-sm text-white font-medium bg-blue-700 hover:bg-blue-600 rounded-lg inline-flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                    </svg>
+                                    Filter
+                                </button>
                             </template>
                             <template #content>
                                 <div class="p-2">
-                                    <p class="text-md font-medium mb-1">Classification</p>
-                                    <ul class="text-sm text-gray-600">
+                                    <p class="text-gray-700 text-[0.9rem] font-medium mb-1">Classification</p>
+                                    <ul class="text-sm text-gray-600 mb-1">
                                         <li>
-                                            <div class="flex items-center p-2 rounded hover:bg-gray-100">
-                                                <input id="checkbox-item-1" type="checkbox" v-model="params.classifications" value="DICT-DTC" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                                                <label for="checkbox-item-1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">DICT-DTC</label>
-                                            </div>
+                                            <label for="checkbox-1" class="flex items-center p-2 text-sm font-medium text-gray-900 rounded hover:bg-gray-100">
+                                                <input id="checkbox-1" type="radio" name="classification" value="DICT-DTC" v-model="params.classification" class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 mr-2" />
+                                                DICT-DTC
+                                            </label>
                                         </li>
                                         <li>
-                                            <div class="flex items-center p-2 rounded hover:bg-gray-100">
-                                                <input id="checkbox-item-2" type="checkbox" v-model="params.classifications" value="Tech4ED Center" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                                                <label for="checkbox-item-2" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Tech4ED Center</label>
-                                            </div>
+                                            <label for="checkbox-2" class="flex items-center p-2 text-sm font-medium text-gray-900 rounded hover:bg-gray-100">
+                                                <input id="checkbox-2" type="radio" name="classification" value="Tech4ED Center" v-model="params.classification" class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 mr-2" />
+                                                Tech4ED Center
+                                            </label>
                                         </li>
                                     </ul>
+
+                                    <div class="flex">
+                                        <span @click="clearFilter" class="text-blue-700 hover:text-blue-600 text-xs uppercase font-medium mx-auto cursor-pointer">Clear Filter</span>
+                                    </div>
                                 </div>
                             </template>
                         </Dropdown>
@@ -89,6 +101,13 @@ watch(() => params, debounce(() => {
                             </span>
                         </label>
                     </div>
+
+                    <Link :href="route('office.create')" class="px-4 w py-2 text-sm text-white font-medium bg-blue-700 hover:bg-blue-600 rounded-lg inline-flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        New office
+                    </Link>
                 </div>
 
                 <Table>

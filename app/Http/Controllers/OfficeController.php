@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Office;
 use Illuminate\Http\Request;
+use App\Http\Requests\NewOfficeRequest;
 
 class OfficeController extends Controller
 {
@@ -18,9 +19,9 @@ class OfficeController extends Controller
             $baseQuery->where('office_name', 'LIKE', "%$request->search%");
         }
 
-        if(is_array($request->classifications)) {
-            // $baseQuery->where('classification', 'LIKE', "%$request->classification%");
-            $baseQuery->whereIn('classification', $request->classifications);
+        if($request->classification) {
+            $baseQuery->where('classification', 'LIKE', "%$request->classification%");
+            // $baseQuery->whereIn('classification', $request->classifications);
         }
 
         $offices = $baseQuery->get();
@@ -36,15 +37,19 @@ class OfficeController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Office/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(NewOfficeRequest $request)
     {
-        //
+        $request->validated();
+
+        Office::create($request->all());
+
+        return redirect(route('office.index'))->with('success', 'New office has been created!');
     }
 
     /**
