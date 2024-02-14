@@ -6,14 +6,18 @@ import Breadcrumb from '@/Components/Breadcrumb.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
+const props = defineProps({
+    office: Object,
+})
+
 const form = useForm({
-    office_name: '',
-    location: '',
-    classification: '',
+    office_name: props.office.data.office_name,
+    location: props.office.data.location,
+    classification: props.office.data.classification,
 })
 
 const submit = () => {
-    form.post(route('office.store'), {
+    form.patch(route('office.update', props.office.data.id), {
         onSuccess: () => form.reset()
     })
 }
@@ -28,19 +32,19 @@ const crumbs = [
         url: route('office.index'),
     },
     {
-        name: "Create office",
+        name: "Edit office",
         url: null,
     },
 ];
 </script>
 
 <template>
-    <Head title="New Office" />
+    <Head title="Edit Office" />
     <AppLayout>
         <div class="py-12">
             <div class="w-full px-12">
                 <Breadcrumb :crumbs="crumbs" class="mb-3" />
-                <h1 class="text-2xl text-gray-700 font-bold mb-4">Create new office</h1>
+                <h1 class="text-2xl text-gray-700 font-bold mb-4">Edit office details</h1>
                 <!-- <p class="text-sm text-gray-500 mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p> -->
 
                 <form @submit.prevent="submit" class="w-full max-w-2xl">
@@ -67,7 +71,7 @@ const crumbs = [
                         <InputError :message="form.errors.classification" />
                     </div>
 
-                    <button type="submit" class="px-4 py-2 text-white text-sm font-medium bg-blue-600 hover:bg-blue-500 rounded-lg">Submit</button>
+                    <button type="submit" class="px-4 py-2 text-white text-sm font-medium bg-blue-600 hover:bg-blue-500 rounded-lg" :disabled="form.processing">Update</button>
                 </form>
             </div>
         </div>

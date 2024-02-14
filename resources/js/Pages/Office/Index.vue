@@ -4,13 +4,15 @@ import Table from '@/Components/Table.vue';
 import TableHeadCell from '@/Components/TableHeadCell.vue';
 import TableRow from '@/Components/TableRow.vue';
 import TableDataCell from '@/Components/TableDataCell.vue';
+import SuccessAlert from '@/Components/SuccessAlert.vue';
 import Dropdown from '@/Components/Dropdown.vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import ResourcePaginator from '@/Components/ResourcePaginator.vue';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { watch, ref } from 'vue';
 import debounce from 'lodash/debounce';
 
 const props = defineProps({
-    offices: Array,
+    offices: Object,
     filters: Object,
 })
 
@@ -28,7 +30,7 @@ watch(() => params, debounce(() => {
         }
     })
 
-    router.get('/offices', q, { preserveState: true, replace: true });
+    router.get(route('office.index'), q, { preserveState: true, replace: true });
 }, 300), {
     deep: true,
 })
@@ -36,6 +38,10 @@ watch(() => params, debounce(() => {
 const clearFilter = () => {
     params.value.classification = null;
 }
+
+// console.log(route('dashboard'))
+
+const page = usePage();
 </script>
 
 <template>
@@ -46,6 +52,8 @@ const clearFilter = () => {
             <div class="w-full px-12">
                 <h1 class="text-2xl text-gray-700 font-bold">Manage Offices</h1>
                 <p class="text-sm text-gray-500 mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                <SuccessAlert v-if="page.props.flash.success" class="mb-4">{{ page.props.flash.success }}</SuccessAlert>
 
                 <div class="flex justify-between items-center mb-4">
                     <div class="flex items-center space-x-2">
@@ -118,7 +126,7 @@ const clearFilter = () => {
                         <TableHeadCell>Actions</TableHeadCell>
                     </template>
                     <template #table-body>
-                        <TableRow v-for="office in offices" :key="office.id" class="bg-white">
+                        <TableRow v-for="office in offices.data" :key="office.id" class="bg-white">
                             <TableDataCell>
                                 <div>
                                     <div class="text-[1rem] font-medium text-gray-700">{{ office.office_name }}</div>
@@ -130,7 +138,7 @@ const clearFilter = () => {
                                     {{ office.location }}
                                 </div>
                             </TableDataCell>
-                            <TableDataCell>{{ new Date(office.created_at).toLocaleDateString() }}</TableDataCell>
+                            <TableDataCell>{{ office.created_at }}</TableDataCell>
                             <TableDataCell>
                                 <div class="flex items-center space-x-2">
                                     <Link id="edit-button" :href="`/offices/edit/${office.id}`" data-tool-tip="Edit" class="w-8 h-8 flex justify-center items-center hover:bg-gray-200 rounded-full">
@@ -148,6 +156,8 @@ const clearFilter = () => {
                         </TableRow>
                     </template>
                 </Table>
+
+                <ResourcePaginator :data="props.offices" class="mt-6" />
             </div>
         </div>
     </AppLayout>

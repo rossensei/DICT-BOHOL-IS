@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -17,6 +18,8 @@ class CategoryController extends Controller
         $categories = Category::select('id', 'catname')
             ->with('subcategories:id,category_id,subcatname')
             ->get();
+
+        // $categories = CategoryResource::collection(Category::with('subcategories')->get());
 
         return inertia('Category/Index', ['categories' => $categories]);
     }

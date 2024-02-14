@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Office;
 use Illuminate\Http\Request;
+use App\Http\Resources\OfficeResource;
 use App\Http\Requests\NewOfficeRequest;
+use App\Http\Requests\UpdateOfficeRequest;
 
 class OfficeController extends Controller
 {
@@ -16,15 +18,17 @@ class OfficeController extends Controller
         $baseQuery = Office::query();
 
         if($request->search) {
-            $baseQuery->where('office_name', 'LIKE', "%$request->search%");
+            $baseQuery->where('office_name', 'LIKE', "%{$request->search}%");
         }
 
         if($request->classification) {
-            $baseQuery->where('classification', 'LIKE', "%$request->classification%");
+            $baseQuery->where('classification', 'LIKE', "%{$request->classification}%");
             // $baseQuery->whereIn('classification', $request->classifications);
         }
 
-        $offices = $baseQuery->get();
+        $collection = $baseQuery->paginate(8)->withQueryString();
+
+        $offices = OfficeResource::collection($collection);
 
         return inertia('Office/Index', [
             'offices' => $offices,
@@ -65,15 +69,19 @@ class OfficeController extends Controller
      */
     public function edit(Office $office)
     {
-        //
+        return inertia('Office/Edit', [
+            'office' => OfficeResource::make($office),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Office $office)
+    public function update(UpdateOfficeRequest $request, Office $office)
     {
-        //
+        $request->validated();
+        $office->update($request->all());
+        return redirect(route('office.index'))->with('success', 'Office details has been updated!');
     }
 
     /**
@@ -81,6 +89,8 @@ class OfficeController extends Controller
      */
     public function destroy(Office $office)
     {
-        //
+        $office->delete();
+
+        return back()->with('success', 'Office has been deleted!');
     }
 }

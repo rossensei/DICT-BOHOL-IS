@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class, 
             SubcategorySeeder::class, 
             UserEmployeeSeeder::class,
+            OfficeSeeder::class,
             RolesAndPermissionsSeeder::class,
         ]);
     }
