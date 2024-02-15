@@ -8,6 +8,7 @@ use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AcquisitionController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ChangePasswordController;
@@ -84,6 +85,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/offices/edit/{office}', [OfficeController::class, 'edit'])->name('office.edit');
     Route::patch('/offices/{office}', [OfficeController::class, 'update'])->name('office.update');
     Route::delete('/offices/{office}', [OfficeController::class, 'destroy'])->name('office.destroy');
+
+    // Acquisitions
+    Route::get('/acquisitions', [AcquisitionController::class, 'index'])->name('acquisition.index');
+    Route::get('/acquisitions/create', [AcquisitionController::class, 'create'])->name('acquisition.create');
+    Route::post('/acquisitions', [AcquisitionController::class, 'store'])->name('acquisition.store');
+    Route::get('/acquisitions/edit/{acquisition}', [AcquisitionController::class, 'edit'])->name('acquisition.edit');
+    Route::patch('/acquisitions/{acquisition}', [AcquisitionController::class, 'update'])->name('acquisition.update');
+    Route::delete('/acquisitions/{acquisition}', [AcquisitionController::class, 'destroy'])->name('acquisition.destroy');
 });
 
 // require __DIR__.'/auth.php';

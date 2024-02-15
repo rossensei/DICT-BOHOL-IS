@@ -15,11 +15,11 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categories = Category::select('id', 'catname')
-            ->with('subcategories:id,category_id,subcatname')
-            ->get();
+        // $categories = Category::select('id', 'catname')
+        //     ->with('subcategories:id,category_id,subcatname')
+        //     ->get();
 
-        // $categories = CategoryResource::collection(Category::with('subcategories')->get());
+        $categories = CategoryResource::collection(Category::with('subcategories')->get());
 
         return inertia('Category/Index', ['categories' => $categories]);
     }
