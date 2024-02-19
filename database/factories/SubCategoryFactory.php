@@ -17,7 +17,7 @@ class SubcategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_id' => fake()->randomElement(range(1, 15)),
+            'category_id' => fake()->randomElement(range(1, 10)),
             'subcatname' => fake()->word()
         ];
     }

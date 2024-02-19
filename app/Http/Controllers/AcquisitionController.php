@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Acquisition;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AcquisitionController extends Controller
 {
@@ -12,7 +13,7 @@ class AcquisitionController extends Controller
      */
     public function index()
     {
-        $acquisitions = Acquisition::all();
+        $acquisitions = Acquisition::select('id', 'name')->get();
         
         return inertia('Acquisition/Index', [
             'acquisitions' => $acquisitions
@@ -32,7 +33,11 @@ class AcquisitionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name' => 'required|string|unique:acquisitions']);
+
+        Acquisition::create(['name' => $request->name]);
+
+        return back()->with('success', 'New acquisition type has been added!');
     }
 
     /**
@@ -56,7 +61,12 @@ class AcquisitionController extends Controller
      */
     public function update(Request $request, Acquisition $acquisition)
     {
-        //
+        // dd($request, $acquisition);
+        $request->validate([
+            'name' => ['required', 'string', Rule::unique(Acquisition::class)->ignore($acquisition->id)]
+        ]);
+
+        $acquisition->update(['name' => $request->name]);
     }
 
     /**
@@ -64,6 +74,8 @@ class AcquisitionController extends Controller
      */
     public function destroy(Acquisition $acquisition)
     {
-        //
+        $acquisition->delete();
+
+        return back()->with('success', 'Acquisition type successfully removed!');
     }
 }

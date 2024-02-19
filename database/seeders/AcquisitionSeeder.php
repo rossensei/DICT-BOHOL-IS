@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Acquisition;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class AcquisitionSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class AcquisitionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Acquisition::factory(10)->create();
     }
 }
