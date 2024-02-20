@@ -37,7 +37,7 @@ class AcquisitionController extends Controller
 
         Acquisition::create(['name' => $request->name]);
 
-        return back()->with('success', 'New acquisition type has been added!');
+        session()->flash('message', 'New acquisition type has been added!');
     }
 
     /**
@@ -67,6 +67,8 @@ class AcquisitionController extends Controller
         ]);
 
         $acquisition->update(['name' => $request->name]);
+
+        session()->flash('message', 'Acquisition type has been updated!');
     }
 
     /**
@@ -76,6 +78,6 @@ class AcquisitionController extends Controller
     {
         $acquisition->delete();
 
-        return back()->with('success', 'Acquisition type successfully removed!');
+        return back()->with('message', 'Acquisition type successfully removed!');
     }
 }

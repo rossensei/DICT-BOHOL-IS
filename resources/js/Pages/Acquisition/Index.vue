@@ -31,7 +31,7 @@ const submit = () => {
                     <h1 class="text-2xl text-gray-700 font-bold">Acquisitions</h1>
                     <p class="text-gray-900 mb-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam ipsa ut sunt eveniet, libero nobis enim.</p>
                 </div>
-                <form @submit="submit" class="flex items-center space-x-3 max-w-2xl py-2">
+                <form @submit.prevent="submit" class="flex items-center space-x-3 max-w-2xl py-2">
                     <label for="new-acquisition" class="relative w-full">
 
                         <span class="absolute left-3 text-gray-400 top-1/2 -translate-y-1/2">

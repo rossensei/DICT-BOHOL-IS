@@ -42,8 +42,8 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'success' => $request->session()->get('success'),
                 'error' => $request->session()->get('error'),
+                'message' => $request->session()->get('message'),
             ],
-            'appUrl' => config('app.url')
         ];
     }
 }

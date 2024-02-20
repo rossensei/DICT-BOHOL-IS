@@ -4,6 +4,7 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import ToastList from '@/Components/ToastList.vue';
 import { Link, useRemember } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
@@ -26,6 +27,9 @@ const clearLocalStorage = () => {
 
 <template>
     <div>
+        <!-- Toast -->
+        <ToastList />
+
         <div class="flex items-start min-h-screen bg-gray-50">
             <nav class="sticky top-0 z-10 bg-[#087ec2ff] min-h-screen duration-300" :class="[ !isCollapsed ? 'w-64' : 'w-16' ]">
                 <div class="relative p-4">
