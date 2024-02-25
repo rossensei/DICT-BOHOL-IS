@@ -18,6 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'catname' => fake()->word(),
+            'code' => str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT),
         ];
     }
 }

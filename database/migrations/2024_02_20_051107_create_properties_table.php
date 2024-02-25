@@ -18,12 +18,12 @@ return new class extends Migration
             $table->foreignId('subcategory_id')->constrained();
             $table->text('description')->nullable();
             $table->string('serial_no');
-            $table->char('measurement_unit', 5);
+            $table->char('measurement_unit');
             $table->integer('unit_value');
             $table->foreignId('acquisition_id')->constrained();
-            $table->foreignId('received_from')->constrained();
+            $table->foreignId('received_from')->constrained('employees');
             $table->foreignId('office_id')->constrained();
-            $table->foreignId('assigned_personnel')->constrained();
+            $table->foreignId('assigned_to')->constrained('employees');
             $table->date('date_acquired');
             $table->enum('status', ['Serviceable', 'Unserviceable']);
             $table->string('photo')->nullable();

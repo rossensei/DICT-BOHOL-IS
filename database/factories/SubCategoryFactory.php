@@ -18,7 +18,8 @@ class SubcategoryFactory extends Factory
     {
         return [
             'category_id' => fake()->randomElement(range(1, 10)),
-            'subcatname' => fake()->word()
+            'code' => str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT),
+            'subcatname' => fake()->word(),
         ];
     }
 }

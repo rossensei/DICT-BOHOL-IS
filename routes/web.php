@@ -8,6 +8,7 @@ use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\AcquisitionController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserProfileController;
@@ -75,7 +76,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/employees/edit/{employee}', [EmployeeController::class, 'edit'])->name('employee.edit');
     Route::put('/employees/update/{employee}', [EmployeeController::class, 'update'])->name('employee.update');
     Route::delete('/employees/delete/{employee}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
-    Route::get('/employees/logon-credentials/{employee}', [EmployeeController::class, 'show'])->name('employee.show');
     // add route for deleting photo (optional)
 
     // Manage Offices
@@ -93,6 +93,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/acquisitions/edit/{acquisition}', [AcquisitionController::class, 'edit'])->name('acquisition.edit');
     Route::patch('/acquisitions/{acquisition}', [AcquisitionController::class, 'update'])->name('acquisition.update');
     Route::delete('/acquisitions/{acquisition}', [AcquisitionController::class, 'destroy'])->name('acquisition.destroy');
+
+    // Properties
+    Route::get('/properties', [PropertyController::class, 'index'])->name('property.index');
+    Route::get('/properties/create', [PropertyController::class, 'create'])->name('property.create');
+    Route::post('/properties', [PropertyController::class, 'store'])->name('property.store');
+    Route::get('/properties/show/{property}', [PropertyController::class, 'show'])->name('property.show');
+    Route::get('/properties/edit/{property}', [PropertyController::class, 'edit'])->name('property.edit');
+    Route::patch('/properties/{property}', [PropertyController::class, 'update'])->name('property.update');
+    Route::delete('/properties/{property}', [PropertyController::class, 'delete'])->name('property.delete');
 });
 
 // require __DIR__.'/auth.php';

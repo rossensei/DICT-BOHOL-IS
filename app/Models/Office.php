@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Property;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Office extends Model
 {
@@ -14,4 +15,9 @@ class Office extends Model
         'location',
         'classification',
     ];
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
+    }
 }
