@@ -21,8 +21,8 @@ const toggleCollapse = (categoryId) => {
 
 <template>
     <div>
-        <ul class="space-y-2 text-sm">
-            <li v-for="category in categories" :key="category.id" class="">
+        <ul class="space-y-2 text-sm w-full divide-y divide-gray-300">
+            <li v-for="category in categories" :key="category.id">
 
                 <div class="flex items-start space-x-3 hover:bg-gray-50 p-2 rounded-lg">
                     <div class="shrink-0">
@@ -34,8 +34,8 @@ const toggleCollapse = (categoryId) => {
                         </span>
                     </div>
 
-                    <span class="ml-4">
-                        {{ category.catname }}
+                    <span class="ml-4 text-gray-500">
+                        {{ category.catname }} <span class="text-gray-700 font-semibold">#{{ category.code }}</span>
                     </span>
                 </div>
 

@@ -64,7 +64,7 @@ const toggleShowPassword = () => {
                     </div>
 
                     <div class="mt-4">
-                        <InputLabel for="username" class="font-semibold" value="Username" />
+                        <!-- <InputLabel for="username" class="font-semibold" value="Username" /> -->
 
                         <div class="relative">
 
@@ -82,6 +82,7 @@ const toggleShowPassword = () => {
                                 required
                                 autofocus
                                 autocomplete="username"
+                                placeholder="Username"
                             />
                         </div>
 
@@ -89,7 +90,7 @@ const toggleShowPassword = () => {
                     </div>
 
                     <div class="mt-4">
-                        <InputLabel for="password" class="font-semibold" value="Password" />
+                        <!-- <InputLabel for="password" class="font-semibold" value="Password" /> -->
 
                         <div class="relative">
 
@@ -107,6 +108,7 @@ const toggleShowPassword = () => {
                                 v-model="form.password"
                                 required
                                 autocomplete="current-password"
+                                placeholder="Password"
                             />
 
                             <!-- <span @click="toggleShowPassword" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-500">

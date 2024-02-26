@@ -19,7 +19,7 @@ class CategoryController extends Controller
         //     ->with('subcategories:id,category_id,subcatname')
         //     ->get();
 
-        $categories = CategoryResource::collection(Category::with('subcategories')->get());
+        $categories = CategoryResource::collection(Category::with('subcategories')->withCount('subcategories')->get());
 
         return inertia('Category/Index', ['categories' => $categories]);
     }
@@ -38,7 +38,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'catname' => 'required|string|unique:categories'
+            'catname' => 'required|string|unique:categories',
+            'code' => 'required|numeric|unique:categories'
         ], [
             'catname.required' => 'The category name field is required.',
             'catname.unique' => 'The category name is already taken.',
@@ -46,7 +47,7 @@ class CategoryController extends Controller
 
         Category::create($request->all());
 
-        return back()->with('success', 'Category successfully created!');
+        return back()->with('message', 'Category successfully created!');
     }
 
     /**
@@ -72,13 +73,14 @@ class CategoryController extends Controller
     {
         $request->validate([
             'catname' => ['required', 'string', Rule::unique(Category::class)->ignore($category->id)],
+            'code' => ['required', 'numeric', Rule::unique(Category::class)->ignore($category->id)]
         ], [
             'catname.required' => 'The category name field is required.',
         ]);
 
         $category->update($request->all());
 
-        return back()->with('success', 'Category details successfully updated!');
+        return redirect(route('category.index'))->with('success', 'Category details successfully updated!');
     }
 
     /**
@@ -86,8 +88,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if($category->subCategories()->exists()) {
-            return back()->with('error', 'Category cannot be deleted because it has existing subcategories.');
+        if($category->subcategories()->exists() || $category->properties()->exists()) {
+            return back()->with('message', 'Error deleting category.');
         } else {
             $category->delete();
             return back()->with('success', 'Category has been removed.');

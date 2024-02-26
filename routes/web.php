@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/categories/update/{category}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/categories/remove/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
-    // Route::get('/categories/{category}/subcategories', [SubcategoryController::class, 'index'])->name('subcategory.index');
+    Route::get('/subcategories', [SubcategoryController::class, 'index'])->name('subcategory.index');
     // Route::post('/categories/{category}/subcategories/new-subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
     Route::post('/subcategories/new-subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
     Route::patch('/subcategories/{subcategory}/update', [SubcategoryController::class, 'update'])->name('subcategory.update');

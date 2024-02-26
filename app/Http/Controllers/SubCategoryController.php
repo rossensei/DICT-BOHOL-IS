@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use App\Http\Resources\SubcategoryResource;
 
 class SubcategoryController extends Controller
 {
@@ -13,7 +14,11 @@ class SubcategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data = Subcategory::with('category')->get();
+        
+        return inertia('Subcategory/Index', [
+            'subcategories' => SubcategoryResource::collection($data)
+        ]);
     }
 
     /**

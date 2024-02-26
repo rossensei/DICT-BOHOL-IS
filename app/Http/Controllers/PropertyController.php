@@ -24,7 +24,10 @@ class PropertyController extends Controller
             'office'
         ])->get();
         
-        return response()->json(PropertyResource::collection($properties));
+        // return response()->json(PropertyResource::collection($properties));
+        return inertia('Property/Index', [
+            'properties' => PropertyResource::collection($properties),
+        ]);
     }
 
     /**
