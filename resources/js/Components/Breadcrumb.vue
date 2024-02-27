@@ -17,7 +17,7 @@ defineProps({
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
               </svg>
 
-              <Link v-if="index < (crumbs.length - 1)" :href="item.url" class="ml-1 text-sm font-normal text-gray-500 hover:text-gray-700 hover:font-medium md:ml-2">              
+              <Link v-if="index < (crumbs.length - 1)" :href="item.url" class="ml-1 text-sm font-normal text-gray-500 hover:text-gray-700 md:ml-2">              
                 {{ item.name }}            
               </Link>
 

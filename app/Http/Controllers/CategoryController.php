@@ -29,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Category/Create');
     }
 
     /**
@@ -47,7 +47,7 @@ class CategoryController extends Controller
 
         Category::create($request->all());
 
-        return back()->with('message', 'Category successfully created!');
+        return redirect(route('category.index'))->with('message', 'Category successfully created!');
     }
 
     /**
