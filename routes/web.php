@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AcquisitionController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserProfileController;
@@ -40,11 +41,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'store']);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/user/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/user/profile', [UserProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/user/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
