@@ -25,6 +25,7 @@ class PropertyResource extends JsonResource
                 'id' => $this->subcategory->id,
                 'subcatname' => $this->subcategory->subcatname,
             ],
+            'item_name' => $this->item_name,
             'description' => $this->description,
             'serial_no' => $this->serial_no,
             'measurement_unit' => $this->measurement_unit,

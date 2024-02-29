@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Resources\EmployeeResource;
 
 class EmployeeController extends Controller
 {
@@ -15,10 +16,10 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::with(['user:id', 'user.roles:id,name'])
-            ->paginate(4)
+            ->paginate(6)
             ->onEachSide(0);
         return inertia('Employee/Index', [
-            'employees' => $employees
+            'employees' => EmployeeResource::collection($employees)
         ]);
     }
 
@@ -159,5 +160,14 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return back()->with('success', 'Employee has been deleted!');
+    }
+
+    public function toggleStatus(Employee $employee)
+    {
+        $employee->status = !$employee->status;
+
+        $employee->save();
+
+        return back();
     }
 }

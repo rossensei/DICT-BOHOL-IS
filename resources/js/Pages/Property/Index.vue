@@ -1,17 +1,23 @@
 <script setup>
+import TextInput from '@/Components/TextInput.vue';
+import PropertyComponent from '@/Components/PropertyComponent.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
-    properties: Array
+    properties: Object,
+
 })
 </script>
 <template>
     <Head title="All Properties" />
     <AppLayout>
         <div class="p-12 w-full">
-            <h1 class="text-2xl text-gray-700 font-bold">Properties</h1>
-            <p class="text-gray-900 mb-4">Add categories, then associate items to them from items page. You can add categories and subcategories as many as you like.</p>
+            <h1 class="text-2xl text-gray-700 font-bold mb-4">All Properties</h1>
+
+            <div class="grid grid-cols-4 gap-4">
+                <PropertyComponent v-for="property in properties.data" :key="property.id" :property="property" />
+            </div>
         </div>
     </AppLayout>
 </template>

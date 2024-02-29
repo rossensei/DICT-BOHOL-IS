@@ -42,6 +42,7 @@ class PropertySeeder extends Seeder
                 'property_no' => $category->code . '-' . $subcategory->code . '-' . str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT),
                 'category_id' => $category->id,
                 'subcategory_id' => $subcategory->id,
+                'item_name' => fake()->word(2, true),
                 'description' => fake()->sentence(),
                 'serial_no' => fake()->ean8(),
                 'measurement_unit' => fake()->randomElement(['kilograms', 'pieces', 'boxes', 'meters']),

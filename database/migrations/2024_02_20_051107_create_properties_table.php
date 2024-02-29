@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('property_no')->unique();
             $table->foreignId('category_id')->constrained();
             $table->foreignId('subcategory_id')->constrained();
+            $table->string('item_name');
             $table->text('description')->nullable();
             $table->string('serial_no');
             $table->char('measurement_unit');

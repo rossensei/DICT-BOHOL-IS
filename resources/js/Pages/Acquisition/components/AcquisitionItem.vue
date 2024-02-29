@@ -34,7 +34,7 @@ const saveEdit = () => {
             {{ acquisition.name }}
         </span>
 
-        <input v-else v-model="form.name" @keyup.enter="saveEdit" @blur="saveEdit" type="text" class="w-full text-sm border-gray-300 rounded-lg">
+        <input v-else v-model="form.name" @keyup.enter="saveEdit" @blur="saveEdit" autofocus type="text" class="w-full text-sm border-gray-300 rounded-lg">
 
         <div class="inline-flex items-center text-base font-semibold text-gray-900 ml-3">
             <div class="flex items-center space-x-2">

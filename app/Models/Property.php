@@ -18,6 +18,7 @@ class Property extends Model
         'property_no',
         'category_id',
         'subcategory_id',
+        'item_name',
         'description',
         'serial_no',
         'measurement_unit',

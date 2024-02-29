@@ -12,16 +12,21 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        // $categories = Category::select('id', 'catname')
-        //     ->with('subcategories:id,category_id,subcatname')
-        //     ->get();
+        $baseQuery = Category::query();
 
-        $categories = CategoryResource::collection(Category::with('subcategories')->withCount('subcategories')->get());
+        if($request->search) {
+            $baseQuery->where('code', 'LIKE', "%".$request->search."%")
+                ->orWhere('catname', 'LIKE', "%".$request->search."%");
+        }
 
-        return inertia('Category/Index', ['categories' => $categories]);
+        $categories = CategoryResource::collection($baseQuery->withCount('subcategories')->get());
+
+        return inertia('Category/Index', [
+            'categories' => $categories, 
+            'filters' => $request->only(['search'])
+        ]);
     }
 
     /**

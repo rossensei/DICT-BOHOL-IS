@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { Head, Link, usePage } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import Tooltip from '@/Components/Tooltip.vue';
 import FallbackUserPhoto from '@/Components/FallbackUserPhoto.vue';
 import Pagination from '@/Components/Pagination.vue';
@@ -23,6 +23,13 @@ const closeSuccessAlert = () => {
 }
 
 const perPage = ref(4);
+
+// Update Employee Status
+const updateEmployeeStatus = (employeeId) => {
+    router.post('/employees/toggle-status/' + employeeId, {
+        preserveScroll: true,
+    })
+}
 </script>
 
 <template>
@@ -91,10 +98,13 @@ const perPage = ref(4);
                                     {{ emp.address }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ emp.status }}
+                                    <label :for="'status-' + emp.id" class="inline-flex items-center mb-5 cursor-pointer">
+                                        <input :id="'status-' + emp.id" type="checkbox" :checked="emp.status" @change="updateEmployeeStatus(emp.id)" class="sr-only peer">
+                                        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                    </label>
                                 </td>
                                 <td class="px-6 py-4">
-                                    Administrator
+                                    {{ emp.role}}
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-2">
@@ -115,7 +125,7 @@ const perPage = ref(4);
                     </table>
                 </div>
 
-                <Pagination class="mt-4" :data="employees" v-model="perPage" />
+                <!-- <Pagination class="mt-4" :data="employees" v-model="perPage" /> -->
             </div>
         </div>
     </AppLayout>
