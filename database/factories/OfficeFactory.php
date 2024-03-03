@@ -18,7 +18,7 @@ class OfficeFactory extends Factory
     {
         return [
             'office_name' => fake()->words(3, true),
-            'location' => fake()->sentence(3),
+            'location' => fake()->streetAddress(),
             'classification' => fake()->randomElement(['DICT-DTC', 'Tech4ED Center', 'Tech4ED Center', 'DICT-DTC',]),
         ];
     }

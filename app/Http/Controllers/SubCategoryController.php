@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
-use App\Http\Resources\SubcategoryResource;
 
 class SubcategoryController extends Controller
 {
@@ -14,11 +12,7 @@ class SubcategoryController extends Controller
      */
     public function index()
     {
-        $data = Subcategory::with('category')->get();
-        
-        return inertia('Subcategory/Index', [
-            'subcategories' => SubcategoryResource::collection($data)
-        ]);
+        //
     }
 
     /**
@@ -34,15 +28,7 @@ class SubcategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $request->validate(['subcatname' => 'string|required|unique:subcategories']);
-
-        // Subcategory::create($request->all());
-        $category = Category::where('id', $request->category_id)->first();
-
-        $category->subcategories()->create(['subcatname' => $request->subcatname]);
-
-        return back()->with('success', 'A new subcategory has been added to '.$category->catname.'!');
+        //
     }
 
     /**
@@ -66,11 +52,7 @@ class SubcategoryController extends Controller
      */
     public function update(Request $request, Subcategory $subcategory)
     {
-        // dd($request->all(), $subcategory);
-        $request->validate(['subcatname' => 'required|string']);
-        $subcategory->update(['subcatname' => $request->subcatname]);
-
-        return back()->with('success', 'Subcategory name has been updated!');
+        //
     }
 
     /**
@@ -78,6 +60,6 @@ class SubcategoryController extends Controller
      */
     public function destroy(Subcategory $subcategory)
     {
-        dd($subcategory);
+        //
     }
 }

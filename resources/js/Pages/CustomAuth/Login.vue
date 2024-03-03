@@ -51,7 +51,7 @@ const toggleShowPassword = () => {
         <div class="w-1/2 bg-white flex-col  ">
             <div class="max-w-md mx-auto mt-48">
                 <Link href="/">
-                    <img :src="logoPath" class="w-40 h-30 mt-20 mx-auto rounded fill-current text-gray-500" />
+                    <img :src="logoPath" class="w-80 mt-20 mx-auto rounded fill-current text-gray-500" />
                 </Link>
 
                 <!-- <div v-if="status" class="mb-4 font-medium text-sm text-green-600">

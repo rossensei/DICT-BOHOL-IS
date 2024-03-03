@@ -20,28 +20,18 @@ class PropertySeeder extends Seeder
             $categoryId = mt_rand(1, 10);
 
             // get the category
-            $category = Category::find($categoryId);
+            $category = Category::with('subcategories')->find($categoryId);
 
-            // get the subcategories of the category
-            $subcategories = Subcategory::where('category_id', $categoryId)->pluck('id', 'code')->toArray();
+            // Convert the loaded collection of subcategories to array and assign to a variable
+            $subcategories = $category->subcategories->toArray();
 
-            // declare subcategory variable
-            $subcategory;
-
-            // check subcategory array length
-            if(count($subcategories) == 1) {
-                $subcategory = $subcategories[0];
-            } else {
-                // pick a random element from subcategories
-                $rndSubcategorId = $subcategories[array_rand($subcategories)];
-
-                $subcategory = Subcategory::find($rndSubcategorId);
-            }
+            // pick a random subcategory
+            $subcategory = $subcategories[array_rand($subcategories)];
 
             Property::create([
-                'property_no' => $category->code . '-' . $subcategory->code . '-' . str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT),
-                'category_id' => $category->id,
-                'subcategory_id' => $subcategory->id,
+                'property_no' => $category['code'] . '-' . $subcategory['code'] . '-' . str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT),
+                'category_id' => $category['id'],
+                'subcategory_id' => $subcategory['id'],
                 'item_name' => fake()->word(2, true),
                 'description' => fake()->sentence(),
                 'serial_no' => fake()->ean8(),

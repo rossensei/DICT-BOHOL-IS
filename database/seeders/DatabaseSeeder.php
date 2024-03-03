@@ -20,12 +20,12 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             CategorySeeder::class, 
-            SubcategorySeeder::class, 
+            // SubcategorySeeder::class, 
             UserEmployeeSeeder::class,
             OfficeSeeder::class,
             RolesAndPermissionsSeeder::class,
             AcquisitionSeeder::class,
-            PropertySeeder::class,
+            // PropertySeeder::class,
         ]);
     }
 }

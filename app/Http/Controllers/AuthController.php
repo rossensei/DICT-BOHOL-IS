@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function loginForm()
     {
-        $logoPath = asset('images/Logo.png');
+        $logoPath = asset('images/dict-commercial-logo.png');
 
         return inertia('CustomAuth/Login', [
             'logoPath' => $logoPath,

@@ -79,6 +79,19 @@ class UserEmployeeSeeder extends Seeder
                     'status' => 0,
                 ],
             ],
+            [
+                'username' => 'jaymar_993485',
+                'password' => 'password123',
+                'employeeInfo' => [
+                    'id_no' => '993485',
+                    'fname' => 'Jay Mar',
+                    'mname' => 'Jamora',
+                    'lname' => 'Masibay',
+                    'emp_type' => 'Plantilla',
+                    'address' => 'Antequera, Bohol',
+                    'status' => 1,
+                ],
+            ],
         ];
 
         foreach($users as $u) {

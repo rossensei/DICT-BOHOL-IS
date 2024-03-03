@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Category;
+use App\Models\Property;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Subcategory extends Model
 {
@@ -11,8 +13,8 @@ class Subcategory extends Model
 
     protected $fillable = [
         'category_id',
-        'subcatname',
         'code',
+        'subcatname',
     ];
 
     public function category()

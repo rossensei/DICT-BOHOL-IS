@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,7 @@ class SubcategoryFactory extends Factory
     {
         return [
             'category_id' => fake()->randomElement(range(1, 10)),
-            'code' => str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT),
+            'code' => strtoupper(Str::random(4)),
             'subcatname' => fake()->word(),
         ];
     }

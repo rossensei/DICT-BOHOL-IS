@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('emp_type');
             $table->string('address');
             $table->boolean('status')->default(1);
-            $table->string('profile_photo_path')->nullable();
+            $table->string('profile_photo')->nullable();
             $table->timestamps();
         });
     }

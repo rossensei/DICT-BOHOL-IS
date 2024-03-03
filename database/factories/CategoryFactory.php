@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +17,18 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+
+        // $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        // $randomString = '';
+        // $max = strlen($characters) - 1;
+
+        // for($i = 0; $i < 4; $i++) {
+        //     $randomString .= $characters[rand(0, $max)];
+        // }
+
         return [
             'catname' => fake()->word(),
-            'code' => str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT),
+            'code' => strtoupper(Str::random(4)),
         ];
     }
 }
